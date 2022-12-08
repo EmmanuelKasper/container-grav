@@ -1,4 +1,4 @@
-GRAV_VERSION=latest
+GRAV_VERSION=1.7.37.1
 .PHONY:build
 help:
 	@echo "make build: build the container image"
@@ -12,7 +12,7 @@ build:
 #TODO: add target to publish the built image on quay.io
 
 grav-admin.zip:
-	curl -o grav-admin.zip -SL https://getgrav.org/download/core/grav-admin/latest
+	curl -o grav-admin.zip -SL https://getgrav.org/download/core/grav-admin/1.7.37.1
 
 grav-admin/user/config/system.yaml: grav-admin.zip
 	test -f grav-admin/user/config/system.yaml || unzip grav-admin.zip "grav-admin/user/*"
