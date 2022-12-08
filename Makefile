@@ -9,7 +9,9 @@ help:
 build:
 	podman build -t grav:$(GRAV_VERSION) --build-arg GRAV_VERSION=$(GRAV_VERSION) .
 
-#TODO: add target to publish the built image on quay.io
+push:
+	podman tag localhost/grav:$(GRAV_VERSION) quay.io/manue/container-grav:$(GRAV_VERSION)
+	podman push quay.io/manue/container-grav:$(GRAV_VERSION)
 
 grav-admin.zip:
 	curl -o grav-admin.zip -SL https://getgrav.org/download/core/grav-admin/1.7.37.1
