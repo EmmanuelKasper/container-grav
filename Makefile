@@ -2,7 +2,7 @@ GRAV_VERSION=1.7.37.1
 .PHONY:build
 help:
 	@echo "make build: build the container image"
-	@echo "make run-dev: run the container image after setting all correct permissions"
+	@echo "make dev-run: run the container image after setting all correct permissions"
 	@echo "make clean: remove the container image, preserving user and backup data"
 	@echo "to update grav, build a new container image, and restart the systemd service"
 
@@ -30,13 +30,12 @@ backup:
 
 initial-setup: user backup
 
-run-dev: initial-setup
-	podman run --publish 8000:80 --volume ./user:/var/www/html/user:Z \
-		--volume ./backup:/var/www/html/backup:Z \
+dev-run: initial-setup
+	podman run --publish 8000:80 --volume $$PWD/user:/var/www/html/user:Z \
+		--volume $$PWD/backup:/var/www/html/backup:Z \
 		--name grav localhost/grav
-
-#TODO: add target to generate systemd service with --new flag so that containers are always
-# recreated from image when the service is started
+service:
+	podman generate systemd --new --name grav
 
 .PHONY: clean
 clean:
